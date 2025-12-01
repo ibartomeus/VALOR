@@ -44,19 +44,25 @@ hist(datsp$n_fruits)
 datsp$total_visits <- as.numeric(datsp$total_visits)
 
 #Check Data with MJ
-scatter.smooth(datsp$n_fruits ~ datsp$total_visits, las = 1)
+scatter.smooth(datsp$n_fruits ~ jitter(datsp$total_visits), las = 1)
 #Clear binary pattern
-boxplot(datsp$n_fruits ~ as.character(datsp$Visited_0_1), las = 1)
+boxplot(datsp$n_fruits ~ as.character(datsp$Treatment), las = 1, xlab ="", ylab = "Fruit set", main = "Anchusa calcarata")
 #Check non-linear fit
 m <- fit_data(seedset = datsp$n_fruits, visitation = datsp$total_visits, 
               a_start = 0, b_start = 250, c_start = 1, control = nls.control(maxiter = 1000))
+plot(datsp$n_fruits ~ jitter(datsp$total_visits), las = 1, 
+     xlab = "Visits", ylab = "Fruit set", main = "Anchusa_calcarata")
 plot_visits(a = m[[1]], b = m[[2]], c = m[[3]], from_ = 0, to_ = 20, add_ = T, col_ = "red")
+
+datsp[which(datsp$total_visits > 2),]
+unique(datsp$plant_number)
 
 #Select the species to explore:-----
 species <- "Narcisus_paperaceus"
 
 datsp <- subset(dat, plant_species == species)
 head(datsp)
+unique(datsp$plant_number)
 
 datsp$n_fruits <- as.numeric(datsp$n_fruits)
 hist(datsp$n_fruits)
@@ -64,9 +70,11 @@ hist(datsp$n_fruits)
 datsp$total_visits <- as.numeric(datsp$total_visits)
 
 #Check Data with MJ
-plot(datsp$n_fruits ~ datsp$total_visits, las = 1)
+plot(datsp$n_fruits ~ jitter(datsp$total_visits), las = 1, xlab = "Visits", 
+     ylab = "Fruit set", main = "Narcisus paperacius")
 #Clear binary pattern
-boxplot(datsp$n_fruits ~ as.character(datsp$Visited_0_1), las = 1)
+boxplot(datsp$n_fruits ~ as.character(datsp$Treatment), las = 1,
+        xlab ="", ylab = "Fruit set", main = "Narcisus paperacius")
 
 
 #Select the species to explore:-----
@@ -74,6 +82,7 @@ species <- "Armeria_gaditana"
 
 datsp <- subset(dat, plant_species == species)
 head(datsp)
+unique(datsp$plant_number)
 
 datsp$n_fruits <- as.numeric(datsp$n_fruits)
 hist(datsp$n_fruits)
@@ -83,13 +92,16 @@ datsp$total_visits <- as.numeric(datsp$total_visits)
 #Check Data with MJ
 scatter.smooth(datsp$n_fruits ~ datsp$total_visits, las = 1) #Nice!
 #Clear binary pattern
-boxplot(datsp$n_fruits ~ as.character(datsp$Visited_0_1), las = 1)
+boxplot(datsp$n_fruits ~ as.character(datsp$Treatment), las = 1,
+        xlab ="", ylab = "Fruit set", main = "Armeria gaditana")
 #Check non-linear fit
 fit_data(seedset = datsp$n_fruits, visitation = datsp$total_visits, 
          a_start = 0, b_start = 250, c_start = 1, control = nls.control(maxiter = 1000))
 #Check non-linear fit
 m <- fit_data(seedset = datsp$n_fruits, visitation = datsp$total_visits, 
               a_start = 0, b_start = 250, c_start = 1, control = nls.control(maxiter = 1000))
+plot(datsp$n_fruits ~ datsp$total_visits, las = 1,  xlab = "Visits", 
+     ylab = "Fruit set", main = "Armeria gaditana")
 plot_visits(a = m[[1]], b = m[[2]], c = m[[3]], from_ = 0, to_ = 20, add_ = T, col_ = "red")
 
 
@@ -99,6 +111,7 @@ species <- "Cynara_humillis"
 
 datsp <- subset(dat, plant_species == species)
 head(datsp)
+unique(datsp$plant_number)
 
 datsp$n_fruits <- as.numeric(datsp$n_fruits)
 hist(datsp$n_fruits)
@@ -108,13 +121,16 @@ datsp$total_visits <- as.numeric(datsp$total_visits)
 #Check Data with MJ
 scatter.smooth(datsp$n_fruits ~ datsp$total_visits, las = 1) 
 #Clear binary pattern
-#boxplot(datsp$n_fruits ~ as.character(datsp$Visited_0_1), las = 1)
+boxplot(datsp$n_fruits ~ as.character(datsp$Treatment), las = 1,
+        xlab ="", ylab = "Fruit set", main = "Cynara humillis")
 
 #Check non-linear fit
-datsp <- subset(datsp, total_visits != 1) #to avoid convergence issues
+#datsp <- subset(datsp, total_visits != 1) #to avoid convergence issues
 scatter.smooth(datsp$n_fruits ~ datsp$total_visits, las = 1) 
 m <- fit_data(seedset = datsp$n_fruits, visitation = datsp$total_visits, 
          a_start = 0, b_start = 200, c_start = 0.1, 
          control = nls.control(maxiter = 1000, scaleOffset = 1, warnOnly = TRUE))
+plot(datsp$n_fruits ~ datsp$total_visits, las = 1, xlab = "Visits", 
+     ylab = "Fruit set", main = "Cynara humillis") 
 plot_visits(a = m[[1]], b = m[[2]], c = m[[3]], from_ = 0, to_ = 20, add_ = T, col_ = "red")
 
